@@ -21,7 +21,7 @@ List<Map<String, dynamic>> _dataList = [];
 var _logr = Logger();
 
 class _HistoryPageState extends State<HistoryPage> {
-  void getData() async {
+  Future<void> getData() async {
     _dataList = await SqlHelper.getItems();
     //_dataList = new List.from(_dataList.reversed);
     if (_dataList != null) {
@@ -32,7 +32,7 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
-  void addData() async {
+  Future<void> addData() async {
     int returnedID = await SqlHelper.createItem("test data 123123");
     debugPrint("returnedID" + returnedID.toString());
     // _logr.d("returnedID" + returnedID.toString());
@@ -59,69 +59,75 @@ class _HistoryPageState extends State<HistoryPage> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          if (_dataList != null && _dataList.isNotEmpty) ...[
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: _dataList.length,
-                itemBuilder: (context, index) => Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    TextFormField(
-                      readOnly: true,
-                      initialValue: _dataList[index]['scannedData'].toString(),
-                      enableInteractiveSelection: false,
-                      maxLines: 1,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color: Color.fromRGBO(201, 201, 201, 1)),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        suffixIcon: IconButton(
-                          tooltip: "Copy",
-                          icon: Icon(Icons.copy),
-                          onPressed: () async {
-                            await Clipboard.setData(ClipboardData(
-                                text: _dataList[index]['scannedData']
-                                    .toString()));
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await getData();
+        },
+        child: Column(
+          children: [
+            if (_dataList != null && _dataList.isNotEmpty) ...[
+              Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: _dataList.length,
+                  itemBuilder: (context, index) => Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      TextFormField(
+                        readOnly: true,
+                        initialValue:
+                            _dataList[index]['scannedData'].toString(),
+                        enableInteractiveSelection: false,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromRGBO(201, 201, 201, 1)),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          suffixIcon: IconButton(
+                            tooltip: "Copy",
+                            icon: Icon(Icons.copy),
+                            onPressed: () async {
+                              await Clipboard.setData(ClipboardData(
+                                  text: _dataList[index]['scannedData']
+                                      .toString()));
 
-                            Fluttertoast.showToast(
-                                msg: "Copied",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          },
+                              Fluttertoast.showToast(
+                                  msg: "Copied",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            },
+                          ),
                         ),
-                      ),
-                    ).pLTRB(10, 10, 10, 10),
-                    Positioned(
-                        bottom: 5,
-                        left: 30,
-                        child: Text(
-                          "  ${_dataList[index]['createdAt'].toString()}‎‎  .",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 13,
-                              backgroundColor:
-                                  Color.fromARGB(249, 255, 255, 255)),
-                        ))
-                  ],
+                      ).pLTRB(10, 10, 10, 10),
+                      Positioned(
+                          bottom: 5,
+                          left: 30,
+                          child: Text(
+                            "  ${_dataList[index]['createdAt'].toString()}  .",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 13,
+                                backgroundColor:
+                                    Color.fromARGB(249, 255, 255, 255)),
+                          ))
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ] else ...[
-            Expanded(
-              child: Center(
-                  child: Text("No Scan Found.Scan something than come back")),
-            )
-          ]
-        ],
+              )
+            ] else ...[
+              Expanded(
+                child: Center(
+                    child: Text("No Scan Found.Scan something than come back")),
+              )
+            ]
+          ],
+        ),
       ),
     );
   }
