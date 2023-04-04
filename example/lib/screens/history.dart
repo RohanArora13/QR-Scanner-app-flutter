@@ -82,7 +82,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         maxLines: 1,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 width: 2,
                                 color: Color.fromRGBO(201, 201, 201, 1)),
                             borderRadius: BorderRadius.circular(10.0),
@@ -110,7 +110,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           left: 30,
                           child: Text(
                             "  ${_dataList[index]['createdAt'].toString()}  .",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 13,
                                 backgroundColor:
