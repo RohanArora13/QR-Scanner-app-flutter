@@ -1,6 +1,6 @@
 # QR Code Scanner
 
-A QR scanner app made using flutter,i have used [qr library](https://pub.dev/packages/qr_code_scanner) . i have used SQFlite library to store qr codes and show them in history tab
+A QR scanner app made using flutter,i have used [qr library](https://pub.dev/packages/qr_code_scanner) .I have used SQFlite library to store qr codes and show them in history tab
 
 ## Features
 
@@ -8,7 +8,7 @@ A QR scanner app made using flutter,i have used [qr library](https://pub.dev/pac
 - History tab to show previous scans
 - options for flash,front camera and play, pause etc
 - friendly UI
-
+- dark mode based on system theme 
 
 ## Screenshots
 
