@@ -50,6 +50,10 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: AppBar(
         title: "History".text.xl2.end.make(),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          // Status bar color
+          statusBarColor: Theme.of(context).buttonColor,
+        ),
         actions: [
           MyPopupMenu(
             changeState: () {
@@ -110,11 +114,13 @@ class _HistoryPageState extends State<HistoryPage> {
                           left: 30,
                           child: Text(
                             "  ${_dataList[index]['createdAt'].toString()}  .",
-                            style: const TextStyle(
-                                color: Colors.grey,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .color,
                                 fontSize: 13,
-                                backgroundColor:
-                                    Color.fromARGB(249, 255, 255, 255)),
+                                backgroundColor: Theme.of(context).canvasColor),
                           ))
                     ],
                   ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner_example/screens/history.dart';
 import 'package:qr_code_scanner_example/screens/qrview.dart';
+import 'package:qr_code_scanner_example/screens/settings.dart';
 import 'package:qr_code_scanner_example/sql/sqlHelper.dart';
 import 'package:qr_code_scanner_example/themes.dart';
 import 'bottomNav.dart';
@@ -29,7 +30,7 @@ class _MyHomeState extends State<MyHome> {
   List<Widget> pageList = [
     const QRViewExample(),
     const HistoryPage(),
-    const MyBottomNav(),
+    const MySetting(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,10 +42,9 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
-
       home: Scaffold(
         //appBar: AppBar(title: const Text('Flutter Demo Home Page')),
         body: SafeArea(child: pageList.elementAt(_selectedIndex)),
