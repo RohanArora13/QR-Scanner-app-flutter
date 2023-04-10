@@ -4,7 +4,7 @@ A QR scanner app made using flutter,i have used [qr library](https://pub.dev/pac
 
 ## Features
 
-- scan any QR code
+- scan any QR code,copy directly
 - History tab to show previous scans
 - options for flash,front camera and play, pause etc
 - friendly UI
